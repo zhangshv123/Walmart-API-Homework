@@ -5,5 +5,6 @@ the project implemented all the functions required and made necessary test cases
 file strucure:
 Recommend.java:
 implemented 3 method , and have main function to execute.
-rest.sh: all necessary test cases.
+
+test.sh: all necessary test cases,you only need to run this file .
 
