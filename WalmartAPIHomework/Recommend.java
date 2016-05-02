@@ -27,8 +27,25 @@ public class Recommend {
             this.score = score;
         }
     }
+        public static enum ErrorCode { 
+            SEARCH_NOT_FOUND("search not found"), 
+            RECOMMEND_NOT_FOUND("recommend not found"); 
+        
+            private String error;
+
+            ErrorCode(String error) {
+                this.error = error;
+            }
+
+            public String getError() {
+                return error;
+            }
+        }
+    
     private static String apiKey = "q3racac3yq3k2rys5razdyze";
-    private static String urlPrefix="http://api.walmartlabs.com/v1/search?apiKey="
+    private static String urlSearchPrefix="http://api.walmartlabs.com/v1/search?apiKey=";
+    private static String urlRecommendPrefix="http://api.walmartlabs.com/v1/nbp?apiKey=";
+    private static String urlReviewPrefix="http://api.walmartlabs.com/v1/reviews/";
     /**
      * @param url of end point.
      * @return a string of json.
@@ -65,7 +82,7 @@ public class Recommend {
      * @exception NullPointerException if search result is None or empty.
      */
     public static JSONArray search(String searchWord){
-        String url = urlPrefix+apiKey+"&query="+searchWord;
+        String url = urlSearchPrefix+apiKey+"&query="+searchWord;
         JSONArray items = null;
         try {
             JSONParser parser = new JSONParser();
@@ -79,7 +96,7 @@ public class Recommend {
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.out.println("search not found");
+            System.out.println(ErrorCode.SEARCH_NOT_FOUND.getError());
         }
         return items;
     }
@@ -91,7 +108,7 @@ public class Recommend {
      * @exception NullPointerException if recommend result is None or empty.
      */
     public static List<Recommendation> recommend(String itemId,int max){
-        String url = urlPrefix+apiKey+"&itemId="+itemId;
+        String url = urlRecommendPrefix+apiKey+"&itemId="+itemId;
         List<Recommendation> res = new ArrayList<>();
         try {
             JSONParser parser = new JSONParser();
@@ -111,7 +128,7 @@ public class Recommend {
         }catch (ParseException e) {
             e.printStackTrace();
         }catch (NullPointerException e) {
-            System.out.println("recommend not found");
+             System.out.println(ErrorCode.RECOMMEND_NOT_FOUND.getError());
         }
         return res;
     }
@@ -122,7 +139,7 @@ public class Recommend {
      * @exception ParseException On parse method.
      */
     public static float reviewScore(String itemId){
-        String url = urlPrefix+itemId+"?apiKey="+apiKey+"&format=json";
+        String url = urlReviewPrefix+itemId+"?apiKey="+apiKey+"&format=json";
         float totalScore = 0;
         try {
             JSONParser parser = new JSONParser();
