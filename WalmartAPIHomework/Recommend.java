@@ -27,6 +27,9 @@ public class Recommend {
             this.score = score;
         }
     }
+    /**
+    * The enum class to defind the error code.
+    */
         public static enum ErrorCode { 
             SEARCH_NOT_FOUND("search not found"), 
             RECOMMEND_NOT_FOUND("recommend not found"); 
@@ -43,10 +46,7 @@ public class Recommend {
         }
     
     private static String apiKey = "q3racac3yq3k2rys5razdyze";
-    private static String urlSearchPrefix="http://api.walmartlabs.com/v1/search?apiKey=";
-    private static String urlRecommendPrefix="http://api.walmartlabs.com/v1/nbp?apiKey=";
-    private static String urlReviewPrefix="http://api.walmartlabs.com/v1/reviews/";
-    /**
+     /**
      * @param url of end point.
      * @return a string of json.
      * @exception IOException On input error.
@@ -61,7 +61,6 @@ public class Recommend {
             throw new IOException(conn.getResponseMessage());
         }
 
-        // Buffer the result into a string
         BufferedReader rd = new BufferedReader(
                 new InputStreamReader(conn.getInputStream()));
         StringBuilder sb = new StringBuilder();
@@ -82,7 +81,7 @@ public class Recommend {
      * @exception NullPointerException if search result is None or empty.
      */
     public static JSONArray search(String searchWord){
-        String url = urlSearchPrefix+apiKey+"&query="+searchWord;
+        String url = "http://api.walmartlabs.com/v1/search?apiKey="+apiKey+"&query="+searchWord;
         JSONArray items = null;
         try {
             JSONParser parser = new JSONParser();
@@ -108,7 +107,7 @@ public class Recommend {
      * @exception NullPointerException if recommend result is None or empty.
      */
     public static List<Recommendation> recommend(String itemId,int max){
-        String url = urlRecommendPrefix+apiKey+"&itemId="+itemId;
+        String url = "http://api.walmartlabs.com/v1/nbp?apiKey="+apiKey+"&itemId="+itemId;
         List<Recommendation> res = new ArrayList<>();
         try {
             JSONParser parser = new JSONParser();
@@ -139,7 +138,7 @@ public class Recommend {
      * @exception ParseException On parse method.
      */
     public static float reviewScore(String itemId){
-        String url = urlReviewPrefix+itemId+"?apiKey="+apiKey+"&format=json";
+        String url = "http://api.walmartlabs.com/v1/reviews/"+itemId+"?apiKey="+apiKey+"&format=json";
         float totalScore = 0;
         try {
             JSONParser parser = new JSONParser();
