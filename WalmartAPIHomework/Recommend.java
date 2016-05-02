@@ -1,4 +1,3 @@
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,6 +28,7 @@ public class Recommend {
         }
     }
     private static String apiKey = "q3racac3yq3k2rys5razdyze";
+    private static String urlPrefix="http://api.walmartlabs.com/v1/search?apiKey="
     /**
      * @param url of end point.
      * @return a string of json.
@@ -65,7 +65,7 @@ public class Recommend {
      * @exception NullPointerException if search result is None or empty.
      */
     public static JSONArray search(String searchWord){
-        String url = "http://api.walmartlabs.com/v1/search?apiKey="+apiKey+"&query="+searchWord;
+        String url = urlPrefix+apiKey+"&query="+searchWord;
         JSONArray items = null;
         try {
             JSONParser parser = new JSONParser();
@@ -91,7 +91,7 @@ public class Recommend {
      * @exception NullPointerException if recommend result is None or empty.
      */
     public static List<Recommendation> recommend(String itemId,int max){
-        String url = "http://api.walmartlabs.com/v1/nbp?apiKey="+apiKey+"&itemId="+itemId;
+        String url = urlPrefix+apiKey+"&itemId="+itemId;
         List<Recommendation> res = new ArrayList<>();
         try {
             JSONParser parser = new JSONParser();
@@ -122,7 +122,7 @@ public class Recommend {
      * @exception ParseException On parse method.
      */
     public static float reviewScore(String itemId){
-        String url = "http://api.walmartlabs.com/v1/reviews/"+itemId+"?apiKey="+apiKey+"&format=json";
+        String url = urlPrefix+itemId+"?apiKey="+apiKey+"&format=json";
         float totalScore = 0;
         try {
             JSONParser parser = new JSONParser();
