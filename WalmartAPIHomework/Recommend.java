@@ -162,7 +162,12 @@ public class Recommend {
     * @return Nothing.
     */
     public static void main(String[] args) {
-        JSONArray items =  search(args[0]);
+        String searchWord="";
+        for(String arg:args){
+                searchWord+=arg;
+        }
+        
+        JSONArray items =  search(searchWord);
         if(items!= null && items.size()>0) {
             JSONObject item = (JSONObject) items.get(0);
             String itemId = String.valueOf(item.get("itemId"));
